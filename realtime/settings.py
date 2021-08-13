@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap5',
+    'django_bootstrap5',
     'channels',
     'chat',
 ]
@@ -135,10 +135,10 @@ ASGI_APPLICATION = 'realtime.routing.application'
 
 # O Redis que vai controlar a conexao ponta a ponta
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)]
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6369)],
         },
     },
 }

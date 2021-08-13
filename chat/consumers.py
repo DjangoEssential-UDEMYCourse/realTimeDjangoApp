@@ -10,7 +10,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #entrar na sala
         await self.channel_layer.group_add(
             self.room_group_name,
-            self.room_name
+            self.channel_name
         )
 
         await self.accept()
@@ -19,7 +19,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # Sai da Sala
         await self.channel_layer.group_discard(
             self.room_group_name,
-            self.room_name
+            self.channel_name
         )
 
     # Recebe mensagem do WebSocket

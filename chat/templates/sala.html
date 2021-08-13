@@ -1,4 +1,4 @@
-{% load bootstrap5 %}
+{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,17 +9,14 @@
 </head>
 <body>
     <div class="container">
-         <div class="card" style="width: 18rem;">
+         <div class="card">
             <div class="card-body">
-                <textarea id="sala" cols="70" rows="15"></textarea><br />
-                <input id="message" type="text" size="100"><br />
-                {% buttons %}
-                    <input id="botaoSend" type="button" value="Enviar"/>
-                {% endbuttons %}
+                <textarea id="sala" class="form-control" cols="70" rows="15"></textarea><br />
+                <input id="message" class="form-control" type="text" size="100"><br />
+                {% bootstrap_button "Enviar Mensagem" id="botaoSend" button_class="btn btn-primary" button_type="button" %}
             </div>
          </div>
     </div>
-    {% bootstrat_javascript jquery='full'%}
     <script>
         var nome_sala = {{nome_sala_json}};
         var chatSocket = new WebSocket(
@@ -30,24 +27,24 @@
         chatSocket.onmessage = function(e) {
             var dados = JSON.parse(e.data);
             var mensagem = dados['mensagem'];
-            document.querySelector("#sala').value += (mensagem + '\n');
+            document.querySelector('#sala').value += (mensagem + '\n');
         };
 
         chatSocket.onclose = function(e) {
             console.error('O Chat encerrou de forma inesperada');
         };
 
-        document.querySelector("#texto").focus();
-        document.querySelector("#texto").onkeyup = function(e) {
-            if(e.keycode == 13){
-                document.querySelector('#botao').click();
+        document.querySelector("#message").focus();
+        document.querySelector("#message").onkeyup = function(e) {
+            if(e.keyCode == 13){
+                document.querySelector('#botaoSend').click();
             }
         };
 
-        document.querySelector("#botao").onclick = function(e) {
-            var mensagemInput = document.querySelector("#texto");
+        document.querySelector("#botaoSend").onclick = function(e) {
+            var mensagemInput = document.querySelector("#message");
             var mensagem = mensagemInput.value;
-            chatSocket.send(JSON.stringyfy({
+            chatSocket.send(JSON.stringify({
                 'mensagem': mensagem
             }));
             mensagemInput.value = "";
