@@ -1,0 +1,43 @@
+{% load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>DJango Chat</title>
+
+    {% bootstrap_css %}
+</head>
+<body>
+    <div class="container">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h4>Qual sala de Chat você gostaria de entrar?</h4>
+                <input id="nome_sala" name="nome_sala" type="text" size="100" placeholder="Nome da Sala ..."/>
+                <br />
+                {% buttons %}
+                    <input id="botaoEntrar" class="btn btn-primary" type="button" value="Entrar" />
+                {% endbuttons%}
+            </div>
+        </div>
+    </div>
+    {% bootstrat_javascript jquery='full'%}
+    <script>
+        document.querySelector("#nome_sala").focus()
+        document.querySelector("#nome_sala").onkeyup = function(e){
+            if(e.keycode == 13) {
+                document.querySelector("#botaoEntrar").click();
+            }
+        };
+        document.querySelector("#botaoEntrar").onclick = function(e) {
+            var nome_sala = document.querySelector("#nome_sala").value;
+            if(nome_sala != "){
+                window.location.pathname = '/chat/' + nome_sala + '/';
+            } else {
+                alert('Você precisa informar o nome da sala.');
+                document.querySelector('#nome_sala).focus();
+            };
+        };
+    </script>
+</body>
+</html>
